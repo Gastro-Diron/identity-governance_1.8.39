@@ -503,7 +503,11 @@ public class UserSelfRegistrationHandler extends AbstractEventHandler {
             }
         }
         if (StringUtils.isNotBlank(code)) {
-            properties.put(IdentityRecoveryConstants.CONFIRMATION_CODE, code);
+            if (IdentityRecoveryConstants.OTP_VERIFICATION.equalsIgnoreCase(verificationMethod)) {
+                properties.put("OTPCode", code);
+            } else {
+                properties.put(IdentityRecoveryConstants.CONFIRMATION_CODE, code);
+            }
         }
         if (IdentityRecoveryConstants.OTP_VERIFICATION.equalsIgnoreCase(verificationMethod)) {
             properties.put(IdentityRecoveryConstants.TEMPLATE_TYPE,
