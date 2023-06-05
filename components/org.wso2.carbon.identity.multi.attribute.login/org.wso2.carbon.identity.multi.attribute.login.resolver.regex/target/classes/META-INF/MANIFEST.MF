@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1685960155092
+Build-Jdk: 11.0.18
+Built-By: gastro
+Bundle-Description: WSO2 Carbon - Governance
+Bundle-DocURL: http://www.wso2.org/
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: WSO2 Carbon - Multi Attribute Login - Regex Based Username 
+ Resolver
+Bundle-SymbolicName: org.wso2.carbon.identity.multi.attribute.login.reso
+ lver.regex
+Bundle-Vendor: WSO2
+Bundle-Version: 1.8.39
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.wso2.carbon.identity.multi.attribute.login.resolver.
+ regex;version="1.8.39";uses:="org.wso2.carbon.identity.multi.attribute.
+ login.mgt,org.wso2.carbon.user.core.common",org.wso2.carbon.identity.mu
+ lti.attribute.login.resolver.regex.internal;version="1.8.39";uses:="org
+ .osgi.service.component,org.wso2.carbon.user.core.service",org.wso2.car
+ bon.identity.multi.attribute.login.resolver.regex.utils;version="1.8.39
+ ";uses:="org.wso2.carbon.user.api,org.wso2.carbon.user.core"
+Import-Package: org.osgi.framework;version="[1.7.0,2.0.0)",org.osgi.serv
+ ice.component;version="[1.2.0,2.0.0)",org.wso2.carbon.identity.multi.at
+ tribute.login.mgt;version="[5.20.211,6.0.0)",org.wso2.carbon.user.api;v
+ ersion="[1.0.1,2.0.0)",org.wso2.carbon.user.core;version="[4.5.0,5.0.0)
+ ",org.wso2.carbon.user.core.claim;version="[4.5.0,5.0.0)",org.wso2.carb
+ on.user.core.common;version="[4.5.0,5.0.0)",org.wso2.carbon.user.core.s
+ ervice;version="[4.5.0,5.0.0)",org.wso2.carbon.user.core.tenant;version
+ ="[4.5.0,5.0.0)",org.wso2.carbon.user.core.util;version="[4.5.0,5.0.0)"
+ ,org.wso2.carbon.identity.governance;version="[1.3.0,2.0.0)"
+Require-Capability: osgi.service;filter:="(objectClass=org.wso2.carbon.u
+ ser.core.service.RealmService)";effective:=active,osgi.ee;filter:="(&(o
+ sgi.ee=JavaSE)(version=1.8))"
+Service-Component: OSGI-INF/identity.multi.attribute.login.resolver.rege
+ x.component.xml
+Tool: Bnd-3.2.0.201605172007

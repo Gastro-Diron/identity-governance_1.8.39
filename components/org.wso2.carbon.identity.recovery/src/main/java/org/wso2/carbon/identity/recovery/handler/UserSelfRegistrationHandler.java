@@ -154,7 +154,7 @@ public class UserSelfRegistrationHandler extends AbstractEventHandler {
 
                     // Create a secret key based on the preferred notification channel.
                     String secretKey = Utils.generateSecretKey(preferredChannel, tenantDomain,
-                            RecoveryScenarios.SELF_SIGN_UP.name());
+                            RecoveryScenarios.SELF_SIGN_UP.name(), verificationMethod);
 
                     // Resolve event name.
                     String eventName = resolveEventName(preferredChannel, userName, domainName, tenantDomain);
@@ -165,7 +165,7 @@ public class UserSelfRegistrationHandler extends AbstractEventHandler {
                     // Notified channel is stored in remaining setIds for recovery purposes.
                     recoveryDataDO.setRemainingSetIds(preferredChannel);
                     userRecoveryDataStore.store(recoveryDataDO);
-                    triggerNotification(user, preferredChannel, secretKey, Utils.getArbitraryProperties(), eventName);
+                    triggerNotification(user, preferredChannel, secretKey, Utils.getArbitraryProperties(), eventName, verificationMethod);
                 }
             } catch (IdentityRecoveryException e) {
                 throw new IdentityEventException("Error while sending self sign up notification ", e);
@@ -285,7 +285,7 @@ public class UserSelfRegistrationHandler extends AbstractEventHandler {
         String verificationMethod = (String) eventProperties.get(IdentityRecoveryConstants.VERIFICATION_METHOD_CLAIM);
         // Resolve preferred notification channel.
         if (StringUtils.isEmpty(verificationMethod)) {
-            verificationMethod = IdentityRecoveryConstants.LINK_VERIFICATION;
+            verificationMethod = IdentityRecoveryConstants.OTP_VERIFICATION;
         }
         if (log.isDebugEnabled()) {
             String message = String
