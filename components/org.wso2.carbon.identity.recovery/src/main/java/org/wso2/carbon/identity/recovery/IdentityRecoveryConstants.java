@@ -45,6 +45,7 @@ public class IdentityRecoveryConstants {
     public static final String NOTIFICATION_TYPE_RESEND_ADMIN_FORCED_PASSWORD_RESET_WITH_OTP =
             "resendAdminForcedPasswordResetWithOTP";
     public static final String NOTIFICATION_TYPE_ACCOUNT_CONFIRM = "accountconfirmation";
+    public static final String NOTIFICATION_TYPE_EMAIL_OTP = "EmailOTP";
     public static final String NOTIFICATION_TYPE_RESEND_ACCOUNT_CONFIRM = "resendaccountconfirmation";
     public static final String NOTIFICATION_TYPE_EMAIL_CONFIRM = "emailconfirm";
     public static final String NOTIFICATION_TYPE_LITE_USER_EMAIL_CONFIRM = "liteUserEmailConfirmation";
@@ -110,6 +111,9 @@ public class IdentityRecoveryConstants {
     public static final String MOBILE_NUMBER_PENDING_VALUE_CLAIM =
             "http://wso2.org/claims/identity/mobileNumber.pendingValue";
     public static final String PREFERRED_CHANNEL_CLAIM = "http://wso2.org/claims/identity/preferredChannel";
+    public static final String VERIFICATION_METHOD_CLAIM = "http://wso2.org/claims/identity/verificationMethod";
+    public static final String LINK_VERIFICATION = "Link";
+    public static final String OTP_VERIFICATION = "OTP";
 
     public static final String ASK_PASSWORD_CLAIM = "http://wso2.org/claims/identity/askPassword";
     public static final String ADMIN_FORCED_PASSWORD_RESET_CLAIM = "http://wso2.org/claims/identity/adminForcedPasswordReset";
@@ -163,6 +167,7 @@ public class IdentityRecoveryConstants {
     public static final String USER_ACCOUNT_RECOVERY = "UAR";
 
     public static final int SMS_OTP_CODE_LENGTH = 6;
+    public static final int EMAIL_OTP_CODE_LENGTH = 6;
     public static final String ENABLE_DETAILED_ERROR_RESPONSE = "Recovery.ErrorMessage.EnableDetailedErrorMessages";
     // Recovery code given at the username and password recovery initiation.
     public static final int RECOVERY_CODE_DEFAULT_EXPIRY_TIME = 1;

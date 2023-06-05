@@ -142,6 +142,7 @@ public class IdentityMgtConstants {
 
         // Enable notification channel resolver.
         public static final String RESOLVE_NOTIFICATION_CHANNELS = "Notification.ResolveNotificationChannels.Enable";
+        public static final String RESOLVE_VERIFICATION_METHOD = "Notification.VerificationMethod";
         public static final String CONFIG_FILE_NAME = "identity-mgt.properties";
         public static final String ACCOUNT_LOCK_ENABLE = "Account.Lock.Enable";
         public static final String AUTH_POLICY_ENABLE = "Authentication.Policy.Enable";

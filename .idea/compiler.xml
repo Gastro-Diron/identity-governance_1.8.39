@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="org.wso2.carbon.identity.account.suspension.notification.task" />
+        <module name="org.wso2.carbon.identity.governance" />
+        <module name="org.wso2.carbon.identity.api.user.recovery" />
+        <module name="org.wso2.carbon.identity.recovery" />
+        <module name="org.wso2.carbon.identity.tenant.resource.manager" />
+        <module name="org.wso2.carbon.identity.api.user.governance" />
+        <module name="org.wso2.carbon.identity.recovery.endpoint" />
+        <module name="org.wso2.carbon.identity.user.rename.core" />
+        <module name="org.wso2.carbon.identity.recovery.stub" />
+        <module name="org.wso2.carbon.identity.password.history" />
+        <module name="org.wso2.carbon.identity.recovery.ui" />
+        <module name="org.wso2.carbon.identity.password.policy" />
+        <module name="org.wso2.carbon.identity.multi.attribute.login.resolver.regex" />
+        <module name="org.wso2.carbon.identity.auth.attribute.handler" />
+        <module name="org.wso2.carbon.identity.multi.attribute.login.service" />
+        <module name="org.wso2.carbon.identity.user.export.core" />
+        <module name="org.wso2.carbon.identity.piicontroller" />
+        <module name="org.wso2.carbon.identity.captcha" />
+        <module name="org.wso2.carbon.identity.user.endpoint" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

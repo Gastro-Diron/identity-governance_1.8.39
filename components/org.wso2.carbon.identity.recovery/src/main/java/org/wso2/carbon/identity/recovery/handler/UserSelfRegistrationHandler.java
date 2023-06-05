@@ -128,6 +128,9 @@ public class UserSelfRegistrationHandler extends AbstractEventHandler {
                 String preferredChannel = resolveNotificationChannel(eventProperties, userName, tenantDomain,
                         domainName);
 
+                String verificationMethod = resolveVerificationMethod(eventProperties, userName, tenantDomain,
+                        domainName);
+
                 // If the preferred channel is already verified, no need to send the notifications or lock
                 // the account.
                 boolean notificationChannelVerified = isNotificationChannelVerified(userName, tenantDomain,
@@ -263,6 +266,35 @@ public class UserSelfRegistrationHandler extends AbstractEventHandler {
             log.debug(message);
         }
         return preferredChannel;
+    }
+
+    /**
+     * Resolve the preferred verification method for the user.
+     *
+     * @param eventProperties Event properties
+     * @param userName        Username
+     * @param tenantDomain    Tenant domain of the user
+     * @param domainName      Userstore domain name of the user
+     * @return verification method
+     * @throws IdentityEventException Error while resolving the notification channel
+     */
+    private String resolveVerificationMethod(Map<String, Object> eventProperties, String userName, String tenantDomain,
+                                             String domainName) throws IdentityEventException {
+
+        // Get the user preferred notification channel.
+        String verificationMethod = (String) eventProperties.get(IdentityRecoveryConstants.VERIFICATION_METHOD_CLAIM);
+        // Resolve preferred notification channel.
+        if (StringUtils.isEmpty(verificationMethod)) {
+            verificationMethod = IdentityRecoveryConstants.LINK_VERIFICATION;
+        }
+        if (log.isDebugEnabled()) {
+            String message = String
+                    .format("Verification method: %1$s for the user : %2$s in domain : %3$s.",
+                            verificationMethod, domainName + CarbonConstants.DOMAIN_SEPARATOR + userName,
+                            tenantDomain);
+            log.debug(message);
+        }
+        return verificationMethod;
     }
 
     /**
@@ -444,6 +476,43 @@ public class UserSelfRegistrationHandler extends AbstractEventHandler {
         }
         properties.put(IdentityRecoveryConstants.TEMPLATE_TYPE,
                     IdentityRecoveryConstants.NOTIFICATION_TYPE_ACCOUNT_CONFIRM);
+        Event identityMgtEvent = new Event(eventName, properties);
+        try {
+            IdentityRecoveryServiceDataHolder.getInstance().getIdentityEventService().handleEvent(identityMgtEvent);
+        } catch (IdentityEventException e) {
+            throw Utils.handleServerException(IdentityRecoveryConstants.ErrorMessages.ERROR_CODE_TRIGGER_NOTIFICATION,
+                    user.getUserName(), e);
+        }
+    }
+
+    private void triggerNotification(User user, String notificationChannel, String code, Property[] props,
+                                     String eventName, String verificationMethod) throws IdentityRecoveryException {
+
+        if (log.isDebugEnabled()) {
+            log.debug("Sending self user registration notification user: " + user.getUserName());
+        }
+        HashMap<String, Object> properties = new HashMap<>();
+        properties.put(IdentityEventConstants.EventProperty.USER_NAME, user.getUserName());
+        properties.put(IdentityEventConstants.EventProperty.TENANT_DOMAIN, user.getTenantDomain());
+        properties.put(IdentityEventConstants.EventProperty.USER_STORE_DOMAIN, user.getUserStoreDomain());
+        properties.put(IdentityEventConstants.EventProperty.NOTIFICATION_CHANNEL, notificationChannel);
+
+        if (props != null && props.length > 0) {
+            for (Property prop : props) {
+                properties.put(prop.getKey(), prop.getValue());
+            }
+        }
+        if (StringUtils.isNotBlank(code)) {
+            properties.put(IdentityRecoveryConstants.CONFIRMATION_CODE, code);
+        }
+        if (IdentityRecoveryConstants.OTP_VERIFICATION.equalsIgnoreCase(verificationMethod)) {
+            properties.put(IdentityRecoveryConstants.TEMPLATE_TYPE,
+                    IdentityRecoveryConstants.NOTIFICATION_TYPE_EMAIL_OTP);
+        } else {
+            properties.put(IdentityRecoveryConstants.TEMPLATE_TYPE,
+                    IdentityRecoveryConstants.NOTIFICATION_TYPE_ACCOUNT_CONFIRM);
+        }
+
         Event identityMgtEvent = new Event(eventName, properties);
         try {
             IdentityRecoveryServiceDataHolder.getInstance().getIdentityEventService().handleEvent(identityMgtEvent);
