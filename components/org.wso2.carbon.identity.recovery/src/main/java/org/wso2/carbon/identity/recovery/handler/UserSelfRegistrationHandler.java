@@ -453,6 +453,52 @@ public class UserSelfRegistrationHandler extends AbstractEventHandler {
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    private void triggerNotification(User user, String notificationChannel, String code, Property[] props,
+                                     String eventName, String verificationMethod) throws IdentityRecoveryException {
+
+        if (log.isDebugEnabled()) {
+            log.debug("Sending self user registration notification user: " + user.getUserName());
+        }
+        HashMap<String, Object> properties = new HashMap<>();
+        properties.put(IdentityEventConstants.EventProperty.USER_NAME, user.getUserName());
+        properties.put(IdentityEventConstants.EventProperty.TENANT_DOMAIN, user.getTenantDomain());
+        properties.put(IdentityEventConstants.EventProperty.USER_STORE_DOMAIN, user.getUserStoreDomain());
+        properties.put(IdentityEventConstants.EventProperty.NOTIFICATION_CHANNEL, notificationChannel);
+
+        if (props != null && props.length > 0) {
+            for (Property prop : props) {
+                properties.put(prop.getKey(), prop.getValue());
+            }
+        }
+        if (StringUtils.isNotBlank(code)) {
+            if (IdentityRecoveryConstants.OTP_VERIFICATION.equalsIgnoreCase(verificationMethod)) {
+                properties.put("OTPCode", code);
+            } else {
+                properties.put(IdentityRecoveryConstants.CONFIRMATION_CODE, code);
+            }
+        }
+        if (IdentityRecoveryConstants.OTP_VERIFICATION.equalsIgnoreCase(verificationMethod)) {
+            properties.put(IdentityRecoveryConstants.TEMPLATE_TYPE,
+                    IdentityRecoveryConstants.NOTIFICATION_TYPE_EMAIL_OTP);
+//            properties.put(IdentityRecoveryConstants.TEMPLATE_TYPE,
+//                    IdentityRecoveryConstants.NOTIFICATION_TYPE_ACCOUNT_CONFIRM_OTP);
+        } else {
+            properties.put(IdentityRecoveryConstants.TEMPLATE_TYPE,
+                    IdentityRecoveryConstants.NOTIFICATION_TYPE_ACCOUNT_CONFIRM);
+        }
+
+        Event identityMgtEvent = new Event(eventName, properties);
+        try {
+            IdentityRecoveryServiceDataHolder.getInstance().getIdentityEventService().handleEvent(identityMgtEvent);
+        } catch (IdentityEventException e) {
+            throw Utils.handleServerException(IdentityRecoveryConstants.ErrorMessages.ERROR_CODE_TRIGGER_NOTIFICATION,
+                    user.getUserName(), e);
+        }
+    }
+
+>>>>>>> Stashed changes
     private void triggerAccountCreationNotification(User user) throws IdentityRecoveryServerException {
         String eventName = IdentityEventConstants.Event.TRIGGER_NOTIFICATION;
         HashMap<String, Object> properties = new HashMap<>();
